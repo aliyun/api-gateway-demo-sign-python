@@ -6,7 +6,7 @@ from com.aliyun.api.gateway.sdk.common import constant
 
 
 class Response(Request):
-    def __init__(self, host=None, url=None, method=constant.GET, headers={}, protocol=constant.HTTP, content=None, port=None,
+    def __init__(self, host=None, url=None, method=constant.GET, headers={}, protocol=constant.HTTP, content_type=None, content=None, port=None,
                  key_file=None, cert_file=None, time_out=None):
         Request.__init__(self, host=host, protocol=protocol, url=url, headers=headers, method=method, time_out=time_out)
         self.__ssl_enable = False
@@ -17,6 +17,7 @@ class Response(Request):
         self.__port = port
         self.__connection = None
         self.set_body(content)
+        self.set_content_type(content_type)
 
     def set_ssl_enable(self, enable):
         self.__ssl_enable = enable

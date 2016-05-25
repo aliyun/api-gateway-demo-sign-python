@@ -37,7 +37,7 @@ class DefaultClient:
             headers = self.build_headers(request)
 
             response = Response(host=request.get_host(), url=request.get_url(), method=request.get_method(),
-                                headers=headers, protocol=request.get_protocol(),
+                                headers=headers, protocol=request.get_protocol(), content_type=request.get_content_type(),
                                 content=request.get_body(), time_out=request.get_time_out())
             if response.get_ssl_enable():
                 return response.get_https_response()
