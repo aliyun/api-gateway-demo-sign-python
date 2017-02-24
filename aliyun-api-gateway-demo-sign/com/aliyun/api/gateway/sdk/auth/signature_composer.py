@@ -21,6 +21,7 @@ from com.aliyun.api.gateway.sdk.common import constant
 from com.aliyun.api.gateway.sdk.auth import sha_hmac256
 from com.aliyun.api.gateway.sdk.util import DateUtil
 import time
+from urllib import unquote
 
 
 def build_sign_str(uri=None, method=None, headers=None, body=None):
@@ -83,7 +84,10 @@ def _build_resource(uri="", body={}):
                 resource.append(body[key])
             else:
                 resource.append(key)
-
+    
+    for idx, res in enumerate(resource):
+        resource[idx] = unquote(res)
+        
     return ''.join(resource)
 
 
