@@ -50,7 +50,6 @@ def build_sign_str(uri=None, method=None, headers=None, body=None):
 
     return ''.join(string_to_sign)
 
-
 def _build_resource(uri="", body={}):
     if uri.__contains__("?"):
         uri_array = uri.split("?")
@@ -84,7 +83,10 @@ def _build_resource(uri="", body={}):
             else:
                 resource.append(key)
 
-    return ''.join(resource)
+    if resource is None:
+        return ''
+
+    return str(resource)
 
 
 def convert_utf8(input_string):
