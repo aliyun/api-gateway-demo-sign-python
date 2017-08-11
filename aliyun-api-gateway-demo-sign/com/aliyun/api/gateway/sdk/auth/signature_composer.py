@@ -86,7 +86,7 @@ def _build_resource(uri="", body={}):
     if resource is None:
         return ''
 
-    return str(resource)
+    return "".join(str(x) for x in resource)
 
 
 def convert_utf8(input_string):
