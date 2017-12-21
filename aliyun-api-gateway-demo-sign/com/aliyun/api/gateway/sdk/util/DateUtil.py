@@ -18,6 +18,6 @@ def get_timestamp():
 
 
 if __name__ == "__main__":
-    print get_iso_8061_date()
-    print get_rfc_2616_date()
-    print get_timestamp()
+    print(get_iso_8061_date())
+    print(get_rfc_2616_date())
+    print(get_timestamp())

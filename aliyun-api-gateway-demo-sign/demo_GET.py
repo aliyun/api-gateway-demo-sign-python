@@ -11,7 +11,7 @@ SMS_KEYS = {
     'app_secret': os.environ.get('app_secret', '你自己的APP_SERCET')}
 cli = client.DefaultClient(**SMS_KEYS)
 
-name, sid, op, sn, phone = 'xx先生', '120526', '修改密码', '1234', '18620610600,18620610611'
+name, sid, op, sn, phone = 'xx先生', '120526', '修改密码', '1234', '18620610611,18620610612'
 query = {
     'ParamString': '{{"name":"{name}","sid":"{sid}","op":"{op}","sn":"{sn}"}}'.format(**locals()),
     'RecNum': phone,
@@ -19,5 +19,5 @@ query = {
     'SignName': '公信刻'}
 url = uri + '&'.join(['{}={}'.format(k, v) for k, v in query.items()])
 req = request.Request(host=host,protocol=constant.HTTP, url=url, method='GET', time_out=30000)
-print cli.execute(req)
+print(cli.execute(req))
 
