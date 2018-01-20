@@ -1,5 +1,6 @@
 from com.aliyun.api.gateway.sdk.http.request import Request
 
+import json
 import httplib
 import urllib
 from com.aliyun.api.gateway.sdk.common import constant
@@ -52,6 +53,8 @@ class Response(Request):
             post_data = None
             if self.get_content_type() == constant.CONTENT_TYPE_FORM and self.get_body():
                 post_data = urllib.urlencode(self.get_body())
+            elif self.get_content_type() == constant.CONTENT_TYPE_JSON and self.get_body():
+                post_data = json.dumps(self.get_body())
             else:
                 post_data = self.get_body()
             self.__connection.request(method=self.get_method(), url=self.get_url(), body=post_data,
