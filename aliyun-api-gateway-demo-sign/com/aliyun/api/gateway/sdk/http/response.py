@@ -3,6 +3,7 @@ from com.aliyun.api.gateway.sdk.http.request import Request
 import json
 import httplib
 import urllib
+import ssl
 from com.aliyun.api.gateway.sdk.common import constant
 
 
@@ -85,12 +86,14 @@ class Response(Request):
         try:
             self.__port = 443
             self.__connection = httplib.HTTPSConnection(self.parse_host(), self.__port,
-                                                        cert_file=self.__cert_file,
-                                                        key_file=self.__key_file)
+                                                        context=ssl.create_default_context())
             self.__connection.connect()
+            post_data = None
             post_data = None
             if self.get_content_type() == constant.CONTENT_TYPE_FORM and self.get_body():
                 post_data = urllib.urlencode(self.get_body())
+            elif self.get_content_type() == constant.CONTENT_TYPE_JSON and self.get_body():
+                post_data = json.dumps(self.get_body())
             else:
                 post_data = self.get_body()
             self.__connection.request(method=self.get_method(), url=self.get_url(), body=post_data,
@@ -107,8 +110,7 @@ class Response(Request):
             self.__port = 443
         try:
             self.__port = 443
-            self.__connection = httplib.HTTPSConnection(self.get_host(), self.__port, cert_file=self.__cert_file,
-                                                        key_file=self.__key_file)
+            self.__connection = httplib.HTTPSConnection(self.get_host(), self.__port)
             self.__connection.connect()
             self.__connection.request(method=self.get_method(), url=self.get_url(), body=self.get_body(),
                                       headers=self.get_headers())
