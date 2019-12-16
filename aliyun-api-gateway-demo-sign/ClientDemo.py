@@ -22,7 +22,7 @@ cli = client.DefaultClient(app_key="appKey", app_secret="appSecret")
 # body["address"] = "testAddress"
 # body["email"] = "testemail@123.com"
 # req_post.set_body(bytearray(source=json.dumps(body), encoding="utf8"))
-# req_post.set_content_type(constant.CONTENT_TYPE_STREAM)
+# req_post.set_content_type(constant.CONTENT_TYPE_JSON)
 # print cli.execute(req_post)
 
 

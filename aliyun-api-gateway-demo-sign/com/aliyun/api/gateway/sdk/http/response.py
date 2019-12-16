@@ -1,7 +1,9 @@
 from com.aliyun.api.gateway.sdk.http.request import Request
 
+import os
 import httplib
 import urllib
+import urlparse
 from com.aliyun.api.gateway.sdk.common import constant
 
 
@@ -47,7 +49,17 @@ class Response(Request):
         if self.__port is None or self.__port == "":
             self.__port = 80
         try:
-            self.__connection = httplib.HTTPConnection(self.parse_host(), self.__port)
+            proxy = os.environ.get("http_proxy")
+            if proxy:
+                proxyurl = urlparse.urlparse(proxy)
+                self.__connection = httplib.HTTPSConnection(proxyurl.netloc,
+                                                            timeout=self.get_time_out())
+                self.__connection.set_tunnel(self.parse_host(), self.__port);
+            else:
+                self.__connection = httplib.HTTPSConnection(self.parse_host(),
+                                                            self.__port,
+                                                            timeout=self.get_time_out())
+
             self.__connection.connect()
             post_data = None
             if self.get_content_type() == constant.CONTENT_TYPE_FORM and self.get_body():
@@ -79,11 +91,25 @@ class Response(Request):
             self.__close_connection()
 
     def get_https_response(self):
-        try:
+        if self.__port is None or self.__port == "":
             self.__port = 443
-            self.__connection = httplib.HTTPSConnection(self.parse_host(), self.__port,
-                                                        cert_file=self.__cert_file,
-                                                        key_file=self.__key_file)
+
+        try:
+            proxy = os.environ.get("https_proxy")
+            if proxy:
+                proxyurl = urlparse.urlparse(proxy)
+                self.__connection = httplib.HTTPSConnection(proxyurl.netloc,
+                                                            cert_file=self.__cert_file,
+                                                            key_file=self.__key_file,
+                                                            timeout=self.get_time_out())
+                self.__connection.set_tunnel(self.parse_host(), self.__port);
+            else:
+                self.__connection = httplib.HTTPSConnection(self.parse_host(),
+                                                            self.__port,
+                                                            cert_file=self.__cert_file,
+                                                            key_file=self.__key_file,
+                                                            timeout=self.get_time_out())
+
             self.__connection.connect()
             post_data = None
             if self.get_content_type() == constant.CONTENT_TYPE_FORM and self.get_body():
