@@ -43,6 +43,6 @@ def ensure_str(value):
 
 def sign(source, secret):
     h = hmac.new(ensure_binary(secret), ensure_binary(source), hashlib.sha256)
-    signature = base64.encodestring(h.digest()).strip()
+    signature = base64.encodebytes(h.digest()).strip()
     return ensure_str(signature)
 

@@ -49,7 +49,7 @@ class DefaultClient:
             raise
 
     def build_headers(self, request=None):
-        headers = dict()
+        headers = request.get_headers()
         header_params = request.get_headers()
         headers[constant.X_CA_TIMESTAMP] = DateUtil.get_timestamp()
         headers[constant.X_CA_KEY] = self.__app_key
