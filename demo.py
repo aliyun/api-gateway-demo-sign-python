@@ -6,7 +6,8 @@ from aliyunsdkgw.common import constant
 host = 'http://staging.xin.riskstorm.com'
 keys = {
     'app_key': os.environ.get('ACCESS_KEY_ID', '你自己的APP_KEY'),
-    'app_secret': os.environ.get('ACCESS_KEY_SECRECT', '你自己的APP_SERCET')}
+    'app_secret': os.environ.get('ACCESS_KEY_SECRET', '你自己的APP_SECRET')
+}
 
 
 def call_api(headers, url, method='GET', time_out=30000):
