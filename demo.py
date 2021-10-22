@@ -3,7 +3,7 @@ from aliyunsdkgw import client
 from aliyunsdkgw.http import request
 from aliyunsdkgw.common import constant
 
-host = 'http://staging.xin.riskstorm.com'
+host = os.environ.get('HOST', '网关host')
 keys = {
     'app_key': os.environ.get('ACCESS_KEY_ID', '你自己的APP_KEY'),
     'app_secret': os.environ.get('ACCESS_KEY_SECRET', '你自己的APP_SECRET')
@@ -22,13 +22,13 @@ def call_api(headers, url, method='GET', time_out=30000):
 
 
 def call_risks():
-    headers = {'X-Token': os.environ.get('X-Token')}
+    headers = {'X-Token': os.environ.get('X-TOKEN')}
     url = '/company/91120116569319294C/risks'
     call_api(headers, url)
 
 
 def call_object_names():
-    headers = {'X-Token': os.environ.get('X-Token')}
+    headers = {'X-Token': os.environ.get('X-TOKEN')}
     url = '/system/constants/object_names'
     call_api(headers, url)
 
