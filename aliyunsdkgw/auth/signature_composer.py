@@ -18,7 +18,7 @@
 # coding=utf-8
 
 from aliyunsdkgw.common import constant
-from aliyunsdkgw.auth import sha_hmac256
+from aliyunsdkgw.auth import hmac_sha256
 from aliyunsdkgw.util import DateUtil
 import time
 
