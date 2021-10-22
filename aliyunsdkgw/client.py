@@ -18,7 +18,7 @@
 # coding=utf-8
 
 import json
-from aliyunsdkgw.util import UUIDUtil, date
+from aliyunsdkgw.util import uuid, date
 from aliyunsdkgw.http.request import Request
 from aliyunsdkgw.http.response import Response
 from aliyunsdkgw.common import constant
@@ -56,7 +56,7 @@ class DefaultClient:
 
         body = request.get_body();
 
-        headers[constant.X_CA_NONCE] = UUIDUtil.get_uuid()
+        headers[constant.X_CA_NONCE] = uuid.get_uuid()
 
         if request.get_content_type():
             headers[constant.HTTP_HEADER_CONTENT_TYPE] = request.get_content_type()
