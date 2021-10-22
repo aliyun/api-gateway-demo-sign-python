@@ -18,7 +18,7 @@
 # coding=utf-8
 
 import json
-from aliyunsdkgw.util import UUIDUtil, DateUtil
+from aliyunsdkgw.util import UUIDUtil, date
 from aliyunsdkgw.http.request import Request
 from aliyunsdkgw.http.response import Response
 from aliyunsdkgw.common import constant
@@ -51,7 +51,7 @@ class DefaultClient:
     def build_headers(self, request=None):
         headers = request.get_headers()
         header_params = request.get_headers()
-        headers[constant.X_CA_TIMESTAMP] = DateUtil.get_timestamp()
+        headers[constant.X_CA_TIMESTAMP] = date.get_timestamp()
         headers[constant.X_CA_KEY] = self.__app_key
 
         body = request.get_body();
