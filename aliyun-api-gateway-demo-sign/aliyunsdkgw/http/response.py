@@ -1,6 +1,6 @@
 import string
-from com.aliyun.api.gateway.sdk.http.request import Request
-from com.aliyun.api.gateway.sdk.common import constant
+from aliyunsdkgw.http.request import Request
+from aliyunsdkgw.common import constant
 try:  # PY3
     from http.client import HTTPConnection
     from urllib.parse import urlencode, splittype, splithost, splitport, quote

@@ -18,11 +18,11 @@
 # coding=utf-8
 
 import json
-from com.aliyun.api.gateway.sdk.util import UUIDUtil, DateUtil
-from com.aliyun.api.gateway.sdk.http.request import Request
-from com.aliyun.api.gateway.sdk.http.response import Response
-from com.aliyun.api.gateway.sdk.common import constant
-from com.aliyun.api.gateway.sdk.auth import md5_tool, signature_composer, sha_hmac256
+from aliyunsdkgw.util import UUIDUtil, DateUtil
+from aliyunsdkgw.http.request import Request
+from aliyunsdkgw.http.response import Response
+from aliyunsdkgw.common import constant
+from aliyunsdkgw.auth import md5_tool, signature_composer, sha_hmac256
 
 
 class DefaultClient:

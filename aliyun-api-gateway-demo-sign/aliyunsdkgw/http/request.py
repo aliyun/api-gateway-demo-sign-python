@@ -1,4 +1,4 @@
-from com.aliyun.api.gateway.sdk.common import constant
+from aliyunsdkgw.common import constant
 
 class Request:
     content_md5 = "Content-MD5"

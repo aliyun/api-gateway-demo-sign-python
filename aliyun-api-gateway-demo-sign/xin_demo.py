@@ -1,7 +1,7 @@
 import os
-from com.aliyun.api.gateway.sdk import client
-from com.aliyun.api.gateway.sdk.http import request
-from com.aliyun.api.gateway.sdk.common import constant
+from aliyunsdkgw import client
+from aliyunsdkgw.http import request
+from aliyunsdkgw.common import constant
 
 host = 'http://staging.xin.riskstorm.com'
 keys = {

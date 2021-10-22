@@ -17,9 +17,9 @@
 # under the License.
 # coding=utf-8
 
-from com.aliyun.api.gateway.sdk.common import constant
-from com.aliyun.api.gateway.sdk.auth import sha_hmac256
-from com.aliyun.api.gateway.sdk.util import DateUtil
+from aliyunsdkgw.common import constant
+from aliyunsdkgw.auth import sha_hmac256
+from aliyunsdkgw.util import DateUtil
 import time
 
 
