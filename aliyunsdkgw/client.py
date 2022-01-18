@@ -18,11 +18,11 @@
 # coding=utf-8
 
 import json
-from com.aliyun.api.gateway.sdk.util import UUIDUtil, DateUtil
-from com.aliyun.api.gateway.sdk.http.request import Request
-from com.aliyun.api.gateway.sdk.http.response import Response
-from com.aliyun.api.gateway.sdk.common import constant
-from com.aliyun.api.gateway.sdk.auth import md5_tool, signature_composer, sha_hmac256
+from aliyunsdkgw.util import uuid, date
+from aliyunsdkgw.http.request import Request
+from aliyunsdkgw.http.response import Response
+from aliyunsdkgw.common import constant
+from aliyunsdkgw.auth import md5_tool, signature_composer, hmac_sha256
 
 
 class DefaultClient:
@@ -49,14 +49,14 @@ class DefaultClient:
             raise
 
     def build_headers(self, request=None):
-        headers = dict()
+        headers = request.get_headers()
         header_params = request.get_headers()
-        headers[constant.X_CA_TIMESTAMP] = DateUtil.get_timestamp()
+        headers[constant.X_CA_TIMESTAMP] = date.get_timestamp()
         headers[constant.X_CA_KEY] = self.__app_key
 
         body = request.get_body();
 
-        headers[constant.X_CA_NONCE] = UUIDUtil.get_uuid()
+        headers[constant.X_CA_NONCE] = uuid.get_uuid()
 
         if request.get_content_type():
             headers[constant.HTTP_HEADER_CONTENT_TYPE] = request.get_content_type()
@@ -77,6 +77,6 @@ class DefaultClient:
             str_to_sign = signature_composer.build_sign_str(uri=request.get_url(), method=request.get_method(),
                                                             headers=headers, body=body)
 
-        headers[constant.X_CA_SIGNATURE] = sha_hmac256.sign(str_to_sign, self.__app_secret)
+        headers[constant.X_CA_SIGNATURE] = hmac_sha256.sign(str_to_sign, self.__app_secret)
 
         return headers

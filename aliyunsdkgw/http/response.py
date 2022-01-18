@@ -1,8 +1,12 @@
-from com.aliyun.api.gateway.sdk.http.request import Request
-
-import httplib
-import urllib
-from com.aliyun.api.gateway.sdk.common import constant
+import string
+from aliyunsdkgw.http.request import Request
+from aliyunsdkgw.common import constant
+try:  # PY3
+    from http.client import HTTPConnection
+    from urllib.parse import urlencode, splittype, splithost, splitport, quote
+except ImportError:  # PY2
+    from httplib import HTTPConnection
+    from urllib import urlencode, splittype, splithost, splitport, quote
 
 
 class Response(Request):
@@ -38,23 +42,24 @@ class Response(Request):
             return self.get_http_response_object()
 
     def parse_host(self):
-        proto, rest = urllib.splittype(self.get_host())
-        host, rest = urllib.splithost(rest)
-        host, port = urllib.splitport(host)
+        proto, rest = splittype(self.get_host())
+        host, rest = splithost(rest)
+        host, port = splitport(host)
         return host
 
     def get_http_response(self):
         if self.__port is None or self.__port == "":
             self.__port = 80
         try:
-            self.__connection = httplib.HTTPConnection(self.parse_host(), self.__port)
+            self.__connection = HTTPConnection(self.parse_host(), self.__port)
             self.__connection.connect()
             post_data = None
             if self.get_content_type() == constant.CONTENT_TYPE_FORM and self.get_body():
-                post_data = urllib.urlencode(self.get_body())
+                post_data = urlencode(self.get_body())
             else:
                 post_data = self.get_body()
-            self.__connection.request(method=self.get_method(), url=self.get_url(), body=post_data,
+            quote_url = quote(self.get_url(), safe=string.printable)
+            self.__connection.request(method=self.get_method(), url=quote_url, body=post_data,
                                       headers=self.get_headers())
             response = self.__connection.getresponse()
             return response.status, response.getheaders(), response.read()
@@ -67,9 +72,10 @@ class Response(Request):
         if self.__port is None or self.__port == "":
             self.__port = 80
         try:
-            self.__connection = httplib.HTTPConnection(self.parse_host(self.get_host()), self.__port)
+            self.__connection = HTTPConnection(self.parse_host(self.get_host()), self.__port)
             self.__connection.connect()
-            self.__connection.request(method=self.get_method(), url=self.get_url(), body=self.get_body(),
+            quote_url = quote(self.get_url(), safe=string.printable)
+            self.__connection.request(method=self.get_method(), url=quote_url, body=self.get_body(),
                                       headers=self.get_headers())
             response = self.__connection.getresponse()
             return response.status, response.getheaders(), response.read()
@@ -81,16 +87,17 @@ class Response(Request):
     def get_https_response(self):
         try:
             self.__port = 443
-            self.__connection = httplib.HTTPSConnection(self.parse_host(), self.__port,
+            self.__connection = HTTPSConnection(self.parse_host(), self.__port,
                                                         cert_file=self.__cert_file,
                                                         key_file=self.__key_file)
             self.__connection.connect()
             post_data = None
             if self.get_content_type() == constant.CONTENT_TYPE_FORM and self.get_body():
-                post_data = urllib.urlencode(self.get_body())
+                post_data = urlencode(self.get_body())
             else:
                 post_data = self.get_body()
-            self.__connection.request(method=self.get_method(), url=self.get_url(), body=post_data,
+            quote_url = quote(self.get_url(), safe=string.printable)
+            self.__connection.request(method=self.get_method(), url=quote_url, body=post_data,
                                       headers=self.get_headers())
             response = self.__connection.getresponse()
             return response.status, response.getheaders(), response.read()
@@ -104,10 +111,11 @@ class Response(Request):
             self.__port = 443
         try:
             self.__port = 443
-            self.__connection = httplib.HTTPSConnection(self.get_host(), self.__port, cert_file=self.__cert_file,
+            self.__connection = HTTPSConnection(self.get_host(), self.__port, cert_file=self.__cert_file,
                                                         key_file=self.__key_file)
             self.__connection.connect()
-            self.__connection.request(method=self.get_method(), url=self.get_url(), body=self.get_body(),
+            quote_url = quote(self.get_url(), safe=string.printable)
+            self.__connection.request(method=self.get_method(), url=quote_url, body=self.get_body(),
                                       headers=self.get_headers())
             response = self.__connection.getresponse()
             return response.status, response.getheaders(), response.read()

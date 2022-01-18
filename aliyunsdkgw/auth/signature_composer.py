@@ -17,10 +17,7 @@
 # under the License.
 # coding=utf-8
 
-from com.aliyun.api.gateway.sdk.common import constant
-from com.aliyun.api.gateway.sdk.auth import sha_hmac256
-from com.aliyun.api.gateway.sdk.util import DateUtil
-import time
+from aliyunsdkgw.common import constant
 
 
 def build_sign_str(uri=None, method=None, headers=None, body=None):
@@ -68,7 +65,7 @@ def _build_resource(uri="", body={}):
     resource.append(uri)
     if body:
         resource.append("?")
-        param_list = body.keys()
+        param_list = list(body.keys())
         param_list.sort()
         first = True
         for key in param_list:
@@ -99,7 +96,7 @@ def _format_header(headers={}):
     lf = '\n'
     temp_headers = []
     if len(headers) > 0:
-        header_list = headers.keys()
+        header_list = list(headers.keys())
         header_list.sort()
         signature_headers = []
         for k in header_list:
