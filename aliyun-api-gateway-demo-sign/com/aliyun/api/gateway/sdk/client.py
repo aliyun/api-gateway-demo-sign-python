@@ -51,6 +51,7 @@ class DefaultClient:
     def build_headers(self, request=None):
         headers = dict()
         header_params = request.get_headers()
+        headers.update(header_params)
         headers[constant.X_CA_TIMESTAMP] = DateUtil.get_timestamp()
         headers[constant.X_CA_KEY] = self.__app_key
 
